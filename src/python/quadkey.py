@@ -52,28 +52,27 @@ class Quadkey:
         return target
 
 if __name__ == '__main__':
-    import csv
-    import sys
-
-    w = csv.DictWriter(sys.stdout, fieldnames=["quadkey", "bin"], delimiter="\t")
-
-    print("-- 周辺9マス")
-    w.writeheader()
-    base = "13300211230123111232"
-    c = Quadkey(base)
-    offs = [
-        (-1, -1),
-        ( 0, -1),
-        ( 1, -1),
-        (-1,  0),
-        ( 0,  0),
-        ( 1,  0),
-        (-1,  1),
-        ( 0,  1),
-        ( 1,  1),
+    qh = [
+        ( (0,  0), '1010' ),
+        ( (0,  1), '1012' ),
+        ( (0,  2), '1030' ),
+        ( (0,  3), '1032' ),
+        ( (0,  4), '1210' ),
+        ( (0,  5), '1212' ),
+        ( (0,  6), '1230' ),
+        ( (0,  7), '1232' ),
+        ( (0,  8), '3010' ),
+        ( (0,  9), '3012' ),
+        ( (0, 10), '3030' ),
+        ( (0, 11), '3032' ),
+        ( (0, 12), '3210' ),
+        ( (0, 13), '3212' ),
+        ( (0, 14), '3230' ),
+        ( (0, 15), '3232' ),
     ]
-    qs = ( c.offset(h, v) for h, v in offs )
-    for x in qs:
-        q = Quadkey(x)
-        w.writerow({"quadkey": q.key, "bin": q.to_binstr()})
 
+    base = qh[0][1]
+    for offs, q in qh:
+        c = Quadkey(base)
+        q2 = Quadkey(c.offset(*offs))
+        print(q2.key, q2.to_binstr())
